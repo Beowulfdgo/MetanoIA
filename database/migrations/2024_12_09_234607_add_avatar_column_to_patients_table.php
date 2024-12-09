@@ -6,23 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::table('patients', function (Blueprint $table) {
-            //
-        });
+        // Solo agregamos la columna si no existe
+        if (!Schema::hasColumn('patients', 'avatar')) {
+            Schema::table('patients', function (Blueprint $table) {
+                $table->string('avatar')->nullable(); // Ajusta el tipo si es necesario
+            });
+        }
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('patients', function (Blueprint $table) {
-            //
+            $table->dropColumn('avatar');
         });
     }
 };
+
